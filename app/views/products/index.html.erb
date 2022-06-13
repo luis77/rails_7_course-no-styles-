@@ -1,0 +1,34 @@
+<%= turbo_frame_tag 'home' do %>
+	<!--con el punto adelante en .title genera una ruta relativa para dentro del archivo de idioma-->
+	<!--busca el controlador product, accion edit, luego el title-->
+	<h2><%= t('.title') %></h2>
+
+	<%= form_with url: products_path, method: :get do |form| %>
+		<%= form.text_field :query_text, placeholder: t('.query_text'), onChange: 'this.form.requestSubmit()', value: params[:query_text]%>
+
+		<%= form.number_field :min_price, placeholder: t('.min_price'), onChange: 'this.form.requestSubmit()', value: params[:min_price]%>
+
+		<%= form.number_field :max_price, placeholder: t('.max_price'), onChange: 'this.form.requestSubmit()', value: params[:max_price]%>
+
+		<%= form.select :order_by, options_for_select(Product::ORDER_BY.keys.map{ |order| [t(".#{order}"), order]}, params[:order_by]), {}, {onChange: 'this.form.requestSubmit()'} %>
+		<!--Product::ORDER_BY obtiene las llaves sin los valores de la constande declarada en el modelo de productos para renderizarlo-->
+		<!--{} esta vacio es porque es la seccion para añadirle los parametros options de rails-->
+	<% end %>
+
+
+	<%= link_to t('.all'), products_path %> <!--imprime todos los productos sin el parametro-->
+
+	<%= render partial: 'category', collection: @categories %>
+
+	<!--para evitar perder los valores del formulario y la categoria seleccionada, creamos otra navegacion independiente para los productos-->
+	<%= turbo_frame_tag "products-#{@pagy.page}", class: 'products' do %>
+		<%= render partial: 'product', collection: @products %>
+		
+		<!--aqui vendría la paginacion real-->
+		<!--en src le decimos que cargamos los resultados de la siguiente pagina, utilizando pagy_url_for respeta la url que se cargo anteriormente y le añade la siguiente pagina respetando todos los filtros-->
+		<!--loading: :lazy es para evitar cargar todos los productos de golpe. solo los cargara por parte cuando se llegue a donde se encuentra este turbo_frame_tag-->
+		<!--todo se ejecuta si pagy tiene una pagina siguiente-->
+		<%= turbo_frame_tag "products-#{@pagy.next}", class: 'products', src: pagy_url_for(@pagy, @pagy.next), loading: :lazy if @pagy.next%>
+	<% end %>
+
+<% end %>

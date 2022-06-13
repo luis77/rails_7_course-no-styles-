@@ -1,0 +1,1 @@
+require 'pagy/extras/countless' #trae todo el código relacionado con countless y solo se hara el require cuando arranquemos la aplicacion
