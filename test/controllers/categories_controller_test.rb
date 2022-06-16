@@ -1,8 +1,11 @@
 require "test_helper"
 
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
-  #se correo lo que hay dentro antes de los test, es para preparar los test
+  
+  #este metodo se ejecuta entes de los tests
+  #se correo lo que hay dentro antes de los test, es para preparar los test y comparar fixtures
   setup do
+    login #metodo creado en el archivo test_herlper. inicia sesion para que no de error los test donde se crean registros por el usuario
     @category = categories(:clothes)
   end
 

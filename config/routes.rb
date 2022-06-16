@@ -14,4 +14,14 @@ Rails.application.routes.draw do
   #get '/products/:id/edit', to: 'products#edit', as: :edit_product
 
   resources :products, path: '/' #hacemos que products recida en el root
+
+  #namespace es para organizar nuestro codigo como si fueran carpetas, al especificarlo creamos en controller una carpeta authentication
+  #path y as vacios para que no formen parte del url en el navegador, la ruta sería users/new
+
+  namespace :authentication, path: '', as: '' do
+    resources :users, only: [:new, :create]
+    resources :sessions, only: [:new, :create]
+  end
+
+
 end

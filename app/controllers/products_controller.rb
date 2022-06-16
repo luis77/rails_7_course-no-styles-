@@ -1,6 +1,15 @@
 class ProductsController < ApplicationController
+	skip_before_action :protect_pages, only: [:index, :show]
 
 	def index
+		@categories = Category.order(name: :asc).load_async #load_async hace que las consultas se carguen en paralelo optimizando tiempo de carga
+
+
+		@pagy, @products = pagy_countless(FindProducts.new.call(product_params_index).load_async, items: 12) #hacemos uso de la gema pagy para paginacion y countless porque sera una paginacion infinita y evita hacer el query del count
+	end
+
+
+	def index_antes_de_30Query_Object_Pattern
 		@categories = Category.order(name: :asc).load_async #load_async hace que las consultas se carguen en paralelo optimizando tiempo de carga
 		@products = Product.with_attached_photo
 
@@ -84,6 +93,10 @@ class ProductsController < ApplicationController
 
 	def product_params
 		params.require(:product).permit(:title, :description, :price, :photo, :category_id)
+	end
+
+	def product_params_index
+		params.permit(:category_id, :min_price, :max_price, :query_text, :order_by) #strong params
 	end
 
 	def product

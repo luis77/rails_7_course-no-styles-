@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+paco:
+  email: paco@vendelo.com
+  username: paco01
+  password_digest: <%= BCrypt::Password.create('testme', cost:5) %> #gema BCrypt debido a que se debe enviar el password encriptado
+#esta contraseña va a tener un coste computacional de 5, cuanto mas dificil sea de generar este hash, mas dificil se le hara al atacante encontrar la contraseña
+
+maria:
+  email: maria@vendelo.com
+  username: maria23
+  password_digest: <%= BCrypt::Password.create('testme', cost:5) %>
+
+pepe:
+  email: pepe@vendelo.com
+  username: pepito
+  password_digest: <%= BCrypt::Password.create('testme', cost:5) %>

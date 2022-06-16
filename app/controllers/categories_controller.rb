@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-
+  skip_before_action :protect_pages, only: [:index, :show]
 
   # GET /categories or /categories.json
   def index

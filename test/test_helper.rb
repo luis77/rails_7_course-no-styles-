@@ -10,4 +10,9 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  def login #sera accesible para todos nuestros test, es un inicio de sesion para que no de error en los test de creacion de registros 
+    post sessions_path, params: {login: 'paco@vendelo.com', password: 'testme'}
+  end
+
 end

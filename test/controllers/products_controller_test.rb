@@ -1,6 +1,11 @@
 require 'test_helper' #incluye en este archivo el codigo que haya en test_helper que incluye elementos de configuracion para todos nuestros tests
 
 class ProductsControllerTest < ActionDispatch::IntegrationTest
+	
+	#este metodo se ejecuta entes de los tests
+	setup do
+	  login #metodo creado en el archivo test_herlper. inicia sesion para que no de error los test donde se crean registros por el usuario
+	end
 
 	test 'render a list of projects' do
 		#prueba en el index de product
