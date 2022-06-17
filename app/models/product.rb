@@ -19,4 +19,5 @@ class Product < ApplicationRecord
 	validates :price, presence: true
 
 	belongs_to :category
+	belongs_to :user, default: -> { Current.user } #Metodo Current que es accesible desde vista, controlador y modelo
 end

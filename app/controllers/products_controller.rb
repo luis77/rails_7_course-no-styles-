@@ -60,6 +60,7 @@ class ProductsController < ApplicationController
 
 	def create
 		@product = Product.new(product_params)
+		#@product = Current.user.products.new(product_params)
 
 		pp @product #muestra por pantalla el contenido de una variable(en el terminal)
 

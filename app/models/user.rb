@@ -14,6 +14,8 @@ class User < ApplicationRecord
 
 	validates :password, length: { minimum: 6 }
 
+	has_many :products, dependent: :destroy #cada que colocamos has_many o has_one debemos especificar que ocurre cuando se elimine un usuario
+
 	before_save :downcase_attributes
 
 	private
